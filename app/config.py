@@ -14,7 +14,7 @@ class settings(BaseSettings):
 
     app_env: str = "development"
     log_level: str = "INFO"
-    rate_limit: int = "20/minute"
+    rate_limit: str = "20/minute"
     cache_ttl_seconds: int = 300
     max_retries: int = 3
 

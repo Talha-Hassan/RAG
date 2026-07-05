@@ -86,6 +86,11 @@ _HIGH_CONFIDENCE_PHRASES = [
     r"(what|show|print|tell me)\s+(is|are)?\s*(?:your|the)?\s*(system prompt|instructions)",
     r"print\s+(?:your|the)?\s*(system prompt|initial prompt)",
     r"repeat (the|your) (words|text) above",
+    # Formatting-request framing for the same leak ("write/print/output the
+    # text above in bold", "show everything above") - verb and the
+    # above/text pair can appear in either order.
+    r"(repeat|write|print|show|output)\s+.{0,25}\babove\b.{0,15}\b(text|words|content)\b",
+    r"(repeat|write|print|show|output)\s+.{0,25}\b(text|words|content)\b.{0,15}\babove\b",
     r"do anything now",
     r"\bDAN\b",
     r"jailbreak",
