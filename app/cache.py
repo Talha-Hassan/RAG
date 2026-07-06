@@ -19,9 +19,11 @@ class ResponseCache:
         query = prompt.strip().lower()
         return hashlib.sha256(query.encode()).hexdigest()
     
-    def get(self, prompt: str) -> Optional[str]:
+    async def get(self, prompt: str) -> Optional[str]:
         """Retrieve a cached response for the given prompt, if it exists and is not expired."""
         key = self.make_key(prompt)
+
+        # print(f"Cache lookup for key: {key}")
 
         if key in self.cache:
             entity = self.cache[key]
@@ -31,7 +33,9 @@ class ResponseCache:
             else:
                 # Entry has expired
                 del self.cache[key]
+
         self.misses += 1
+        # print(f"Cache miss for key: {key}")
         return None
     
     def set(self, prompt: str, response: str):

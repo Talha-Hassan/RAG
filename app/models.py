@@ -6,14 +6,14 @@ class ChatRequest(BaseModel):
     """Request model for chat messages."""
 
     message: str = Field(..., min_length=1, max_length=10000,description="The message content from the user.")
-    timestamp: datetime = Field(default_factory=datetime.utcnow, description="Timestamp of the message.")
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), description="Timestamp of the message.")
 
 class ChatResponse(BaseModel):
     """Response model for chat messages."""
 
-    response : str
-    thread_id: str
-    model_used: str
+    response : str # json
+    thread_id: str | None
+    model_used: str 
     cached : bool
     processing_time: float
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), description="Timestamp of the response.")

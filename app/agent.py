@@ -74,7 +74,7 @@ class ProductionAgent:
         return graph.compile()
     
 
-    def invoke(self, message: str) -> str:
+    async def invoke(self, message: str) -> str:
         """Invoke the agent with a user message and return the response."""
         initial_state: AgentState = {
             "messages": [HumanMessage(content=message)],
@@ -82,6 +82,13 @@ class ProductionAgent:
             "retry_count": 0,
             "model_used": self.settings.primary_model
         }
+        # print(f"Invoking agent with initial state: {initial_state}")
         final_state = self.graph.invoke(initial_state)
 
-        return final_state["messages"][-1].content
+        # print(f"Messages in final state: {final_state['err']}")
+        
+        return {
+            "response": final_state['messages'][1].content if final_state['messages'] else "No response generated.",
+            "model_used": final_state['model_used'],
+            "error": final_state['err']
+        }
